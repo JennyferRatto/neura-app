@@ -1,49 +1,56 @@
 
-     HTML
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEURA App - Jennyfer Ratto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEURA - Jennyfer Ratto</title>
     <style>
-        body { background-color: #000; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; height: 100vh; }
+        body { background: #000; color: white; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
         
-        /* PANTALLA 1: DIAMANTE */
-        #screen1 { display: flex; flex-direction: column; align-items: center; text-align: center; transition: opacity 0.5s ease; }
-        .diamond { width: 100px; height: 100px; background: #00e5ff; transform: rotate(45deg); box-shadow: 0 0 50px #00e5ff; animation: pulse 2s infinite; cursor: pointer; }
-        .title { letter-spacing: 15px; font-size: 2.5rem; margin-top: 50px; font-weight: 300; }
-        
-        /* PANTALLA 2: PANEL DE CONTROL (IMAGEN 2) */
-        #screen2 { display: none; width: 90%; max-width: 400px; opacity: 0; transition: opacity 0.5s ease; }
-        .panel { border: 1px solid #00e5ff; padding: 20px; background: rgba(0, 229, 255, 0.05); border-radius: 10px; }
-        .stat-row { display: flex; justify-content: space-between; margin: 15px 0; border-bottom: 1px solid #222; padding-bottom: 5px; }
-        .btn-action { width: 100%; padding: 15px; background: #00e5ff; color: black; border: none; font-weight: bold; border-radius: 5px; margin-top: 20px; cursor: pointer; }
+        /* PANTALLA 1: DIAMANTE AZUL */
+        #screen1 { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; transition: 0.5s; }
+        .diamond { width: 100px; height: 100px; background: #00e5ff; transform: rotate(45deg); box-shadow: 0 0 60px #00e5ff; animation: pulse 2.5s infinite; cursor: pointer; margin-bottom: 40px; }
+        .title { letter-spacing: 15px; font-size: 2.8rem; font-weight: 200; margin: 0; }
+        .author { color: #444; letter-spacing: 4px; font-size: 0.7rem; margin-top: 10px; text-transform: uppercase; }
 
-        @keyframes pulse { 0%, 100% { transform: rotate(45deg) scale(1); } 50% { transform: rotate(45deg) scale(1.05); box-shadow: 0 0 80px #00e5ff; } }
+        /* PANTALLA 2: ANALIZADOR DORADO */
+        #screen2 { display: none; width: 85%; max-width: 400px; opacity: 0; transition: 0.8s; text-align: center; }
+        .gold-panel { border: 1px solid #ffd700; padding: 40px 25px; border-radius: 20px; background: rgba(255, 215, 0, 0.02); box-shadow: 0 0 30px rgba(255, 215, 0, 0.1); }
+        .btn-gold { 
+            background: linear-gradient(180deg, #ffe047 0%, #b8860b 100%); 
+            color: black; border: none; padding: 20px; width: 100%; 
+            font-weight: 900; font-size: 1.2rem; border-radius: 12px; 
+            cursor: pointer; margin-top: 35px; box-shadow: 0 0 30px #ffd700;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .progress-container { width: 100%; height: 6px; background: #111; margin: 30px 0; border-radius: 10px; overflow: hidden; border: 0.5px solid #333; }
+        .progress-bar { width: 0%; height: 100%; background: #ffd700; box-shadow: 0 0 15px #ffd700; transition: 0.1s; }
+
+        @keyframes pulse { 0% { box-shadow: 0 0 30px #00e5ff; transform: rotate(45deg) scale(1); } 50% { box-shadow: 0 0 80px #00e5ff; transform: rotate(45deg) scale(1.05); } 100% { box-shadow: 0 0 30px #00e5ff; transform: rotate(45deg) scale(1); } }
     </style>
 </head>
 <body>
 
-    <div id="screen1">
-        <div class="diamond" onclick="goToScreen2()"></div>
-        <div class="title">NEURA</div>
-        <p style="color: #555; letter-spacing: 2px;">BY JENNYFER RATTO</p>
+    <div id="screen1" onclick="toScreen2()">
+        <div class="diamond"></div>
+        <h1 class="title">NEURA</h1>
+        <div class="author">by Jennyfer Ratto</div>
     </div>
 
     <div id="screen2">
-        <div class="panel">
-            <h2 style="color: #00e5ff; text-align: center;">NEURA CORE</h2>
-            <div class="stat-row"><span>STATUS:</span> <span style="color: #0f0;">ONLINE</span></div>
-            <div class="stat-row"><span>ENERGÍA:</span> <span>98%</span></div>
-            <div class="stat-row"><span>SISTEMA:</span> <span>DICE BUILD</span></div>
-            <button class="btn-action">ACCEDER A BASE DE DATOS</button>
+        <div class="gold-panel">
+            <h2 style="color: #ffd700; margin-bottom: 5px; font-weight: 300;">NEURA CORE</h2>
+            <p style="color: #666; font-size: 0.8rem; letter-spacing: 2px;">SYSTEM READY</p>
+            <div class="progress-container"><div id="bar" class="progress-bar"></div></div>
+            <p id="status" style="color: #ffd700; font-family: monospace; font-size: 0.8rem;">AWAITING COMMAND...</p>
+            <button class="btn-gold" onclick="runAnalysis()">ANALIZAR</button>
         </div>
     </div>
 
     <script>
-        function goToScreen2() {
+        function toScreen2() {
             document.getElementById('screen1').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('screen1').style.display = 'none';
@@ -51,6 +58,25 @@
                 setTimeout(() => { document.getElementById('screen2').style.opacity = '1'; }, 50);
             }, 500);
         }
+
+        function runAnalysis() {
+            let bar = document.getElementById('bar');
+            let status = document.getElementById('status');
+            let w = 0;
+            status.innerText = "ANALYZING DATA...";
+            let itv = setInterval(() => {
+                if (w >= 100) {
+                    clearInterval(itv);
+                    status.innerText = "COMPLETED";
+                    alert("ACCESS GRANTED - NEURA SYSTEM ACTIVE");
+                } else {
+                    w++;
+                    bar.style.width = w + '%';
+                }
+            }, 40);
+        }
     </script>
 </body>
 </html>
+  
+     
