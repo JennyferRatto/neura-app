@@ -1,5 +1,16 @@
 
 
+¡Quedó excelente! Ese brillo dorado ya tiene toda la personalidad de tus fotos. Ahora, para que se vea exactamente como la tercera imagen (donde aparecen los datos y los gráficos del análisis), tenemos que agregar la Pantalla de Resultados.
+
+Vamos a hacer que, cuando la barra se llene, el cuadro dorado se desvanezca y aparezca la interfaz final de Neura.
+
+🛠️ Paso final para completar las 3 imágenes:
+Entra a editar: Editar index.html en GitHub
+
+Borra todo y pega este código completo. He añadido la "Screen 3" con el estilo de datos técnicos de tu última imagen:
+
+HTML
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,76 +18,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NEURA - Jennyfer Ratto</title>
     <style>
-        body { background: #000; color: white; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        body { background: #000; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
         
-        /* PANTALLA 1: DIAMANTE AZUL */
-        #screen1 { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; transition: 0.5s; }
-        .diamond { width: 100px; height: 100px; background: #00e5ff; transform: rotate(45deg); box-shadow: 0 0 60px #00e5ff; animation: pulse 2.5s infinite; cursor: pointer; margin-bottom: 40px; }
-        .title { letter-spacing: 15px; font-size: 2.8rem; font-weight: 200; margin: 0; }
-        .author { color: #444; letter-spacing: 4px; font-size: 0.7rem; margin-top: 10px; text-transform: uppercase; }
+        /* PANTALLA 1: DIAMANTE */
+        #screen1 { display: flex; flex-direction: column; align-items: center; transition: 0.5s; cursor: pointer; }
+        .diamond { width: 90px; height: 90px; background: #00e5ff; transform: rotate(45deg); box-shadow: 0 0 50px #00e5ff; animation: pulse 2s infinite; }
+        
+        /* PANTALLA 2: ANALIZADOR */
+        #screen2 { display: none; width: 85%; max-width: 400px; text-align: center; opacity: 0; transition: 0.5s; }
+        .gold-card { border: 1px solid #ffd700; padding: 30px; border-radius: 20px; background: rgba(255, 215, 0, 0.02); box-shadow: 0 0 30px rgba(255, 215, 0, 0.2); }
+        .btn-gold { background: linear-gradient(180deg, #ffe047 0%, #b8860b 100%); color: black; border: none; padding: 18px; width: 100%; font-weight: 900; border-radius: 12px; cursor: pointer; margin-top: 25px; box-shadow: 0 0 20px #ffd700; text-transform: uppercase; }
+        
+        /* PANTALLA 3: RESULTADOS (LA QUE FALTA) */
+        #screen3 { display: none; width: 90%; max-width: 500px; opacity: 0; transition: 0.8s; }
+        .result-header { border-left: 4px solid #00e5ff; padding-left: 15px; margin-bottom: 30px; }
+        .data-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #222; font-family: monospace; font-size: 0.9rem; }
+        .glow-text { color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
 
-        /* PANTALLA 2: ANALIZADOR DORADO */
-        #screen2 { display: none; width: 85%; max-width: 400px; opacity: 0; transition: 0.8s; text-align: center; }
-        .gold-panel { border: 1px solid #ffd700; padding: 40px 25px; border-radius: 20px; background: rgba(255, 215, 0, 0.02); box-shadow: 0 0 30px rgba(255, 215, 0, 0.1); }
-        .btn-gold { 
-            background: linear-gradient(180deg, #ffe047 0%, #b8860b 100%); 
-            color: black; border: none; padding: 20px; width: 100%; 
-            font-weight: 900; font-size: 1.2rem; border-radius: 12px; 
-            cursor: pointer; margin-top: 35px; box-shadow: 0 0 30px #ffd700;
-            text-transform: uppercase; letter-spacing: 2px;
-        }
-        .progress-container { width: 100%; height: 6px; background: #111; margin: 30px 0; border-radius: 10px; overflow: hidden; border: 0.5px solid #333; }
-        .progress-bar { width: 0%; height: 100%; background: #ffd700; box-shadow: 0 0 15px #ffd700; transition: 0.1s; }
-
-        @keyframes pulse { 0% { box-shadow: 0 0 30px #00e5ff; transform: rotate(45deg) scale(1); } 50% { box-shadow: 0 0 80px #00e5ff; transform: rotate(45deg) scale(1.05); } 100% { box-shadow: 0 0 30px #00e5ff; transform: rotate(45deg) scale(1); } }
+        /* ANIMACIONES */
+        .progress-bar { width: 0%; height: 6px; background: #ffd700; box-shadow: 0 0 15px #ffd700; margin: 20px 0; border-radius: 10px; transition: 0.1s; }
+        @keyframes pulse { 0%, 100% { transform: rotate(45deg) scale(1); } 50% { transform: rotate(45deg) scale(1.05); } }
     </style>
 </head>
 <body>
 
-    <div id="screen1" onclick="toScreen2()">
+    <div id="screen1" onclick="showScreen2()">
         <div class="diamond"></div>
-        <h1 class="title">NEURA</h1>
-        <div class="author">by Jennyfer Ratto</div>
+        <h1 style="letter-spacing: 15px; font-weight: 200; margin-top: 40px;">NEURA</h1>
     </div>
 
     <div id="screen2">
-        <div class="gold-panel">
-            <h2 style="color: #ffd700; margin-bottom: 5px; font-weight: 300;">NEURA CORE</h2>
-            <p style="color: #666; font-size: 0.8rem; letter-spacing: 2px;">SYSTEM READY</p>
-            <div class="progress-container"><div id="bar" class="progress-bar"></div></div>
-            <p id="status" style="color: #ffd700; font-family: monospace; font-size: 0.8rem;">AWAITING COMMAND...</p>
-            <button class="btn-gold" onclick="runAnalysis()">ANALIZAR</button>
+        <div class="gold-card">
+            <h2 style="color: #ffd700; letter-spacing: 2px;">NEURA CORE</h2>
+            <div style="width:100%; background:#111; height:6px; border-radius:10px;">
+                <div id="bar" class="progress-bar"></div>
+            </div>
+            <p id="status" style="color:#ffd700; font-family:monospace;">READY</p>
+            <button class="btn-gold" onclick="startLoading()">ANALIZAR</button>
         </div>
     </div>
 
+    <div id="screen3">
+        <div class="result-header">
+            <h1 style="margin:0; font-weight: 200;">ANALYSIS <span class="glow-text">COMPLETE</span></h1>
+            <p style="color:#555; margin:5px 0;">SYSTEM VERSION 2026.1</p>
+        </div>
+        
+        <div class="data-row"><span>NEURA IDENT:</span> <span class="glow-text">JENNYFER_RATTO_01</span></div>
+        <div class="data-row"><span>ACCURACY:</span> <span class="glow-text">99.9%</span></div>
+        <div class="data-row"><span>POWER LEVEL:</span> <span class="glow-text">MAXIMUM</span></div>
+        <div class="data-row"><span>STATUS:</span> <span style="color:#0f0;">ENCRYPTED</span></div>
+
+        <button onclick="location.reload()" style="background:transparent; border:1px solid #444; color:#444; padding:10px; margin-top:40px; width:100%; border-radius:5px; cursor:pointer;">RESTART SYSTEM</button>
+    </div>
+
     <script>
-        function toScreen2() {
-            document.getElementById('screen1').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('screen1').style.display = 'none';
-                document.getElementById('screen2').style.display = 'block';
-                setTimeout(() => { document.getElementById('screen2').style.opacity = '1'; }, 50);
-            }, 500);
+        function showScreen2() {
+            document.getElementById('screen1').style.display = 'none';
+            document.getElementById('screen2').style.display = 'block';
+            setTimeout(() => { document.getElementById('screen2').style.opacity = '1'; }, 50);
         }
 
-        function runAnalysis() {
+        function startLoading() {
             let bar = document.getElementById('bar');
             let status = document.getElementById('status');
             let w = 0;
-            status.innerText = "ANALYZING DATA...";
+            status.innerText = "PROCESSING...";
             let itv = setInterval(() => {
                 if (w >= 100) {
                     clearInterval(itv);
-                    status.innerText = "COMPLETED";
-                    alert("ACCESS GRANTED - NEURA SYSTEM ACTIVE");
+                    status.innerText = "SUCCESS";
+                    setTimeout(showScreen3, 800);
                 } else {
                     w++;
                     bar.style.width = w + '%';
                 }
-            }, 40);
+            }, 30);
+        }
+
+        function showScreen3() {
+            document.getElementById('screen2').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('screen2').style.display = 'none';
+                document.getElementById('screen3').style.display = 'block';
+                setTimeout(() => { document.getElementById('screen3').style.opacity = '1'; }, 50);
+            }, 500);
         }
     </script>
 </body>
 </html>
-  
-     
