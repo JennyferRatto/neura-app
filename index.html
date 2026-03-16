@@ -4,24 +4,50 @@ HTML
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>NEURA - Jennyfer Ratto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEURA App - Jennyfer Ratto</title>
     <style>
-        body { background: #000; color: #0f0; font-family: monospace; padding: 20px; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .terminal { border: 1px solid #0f0; padding: 30px; background: #001100; box-shadow: 0 0 20px #0f0; width: 100%; max-width: 600px; }
-        .line { margin: 10px 0; font-size: 1.2rem; text-transform: uppercase; }
-        .ok { color: #0f0; font-weight: bold; }
-        .white { color: #fff; }
-        .cursor { display: inline-block; width: 10px; height: 20px; background: #0f0; animation: blink 1s infinite; vertical-align: middle; }
-        @keyframes blink { 50% { opacity: 0; } }
+        body { background-color: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+        
+        /* Contenedor del Diamante */
+        .diamond-container { cursor: pointer; position: relative; transition: transform 0.3s ease; }
+        .diamond-container:active { transform: scale(0.9); }
+
+        /* El Diamante Neón */
+        .diamond { width: 100px; height: 100px; background: #00e5ff; transform: rotate(45deg); box-shadow: 0 0 50px #00e5ff, 0 0 100px #0081a7; animation: pulse 2s infinite; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 30px #00e5ff; transform: rotate(45deg) scale(1); }
+            50% { box-shadow: 0 0 60px #00e5ff, 0 0 100px #00b4d8; transform: rotate(45deg) scale(1.05); }
+            100% { box-shadow: 0 0 30px #00e5ff; transform: rotate(45deg) scale(1); }
+        }
+
+        .title { color: white; letter-spacing: 15px; font-size: 2.5rem; margin-top: 50px; font-weight: 300; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .subtitle { color: #555; margin-top: 10px; font-size: 0.9rem; letter-spacing: 2px; }
+
+        /* Efecto de carga al tocarlo */
+        #loading { display: none; color: #00e5ff; margin-top: 20px; font-family: monospace; }
     </style>
 </head>
 <body>
-    <div class="terminal">
-        <div class="line"><span class="white">SISTEMA: JENNYFER@RATTO</span></div>
-        <div class="line"><span class="ok">[OK]</span> <span class="white">DICE BUILD COMMAND ACTIVADO</span></div>
-        <div class="line"><span class="ok">[OK]</span> <span class="white">NEURA INTERFACE ONLINE</span></div>
-        <div class="line"><span class="ok">[OK]</span> <span class="white">ACCESO TOTAL 2026</span></div>
-        <div class="line"><span class="white">$ </span><span class="cursor"></span></div>
+
+    <div class="diamond-container" onclick="startApp()">
+        <div class="diamond"></div>
     </div>
+
+    <div class="title">NEURA</div>
+    <div class="subtitle">by Jennyfer Ratto</div>
+    
+    <div id="loading">INICIANDO INTERFAZ...</div>
+
+    <script>
+        function startApp() {
+            document.getElementById('loading').style.display = 'block';
+            setTimeout(() => {
+                alert("CONECTANDO A BASE DE DATOS NEURA...");
+                // Aquí programaremos el salto a la Imagen 2
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
